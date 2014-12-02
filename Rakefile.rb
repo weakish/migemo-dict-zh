@@ -10,10 +10,41 @@ require 'nokogiri'
 task :convert do
 	hanzi_to_pinyin = JSON.parse open('hz2py.json').read
 	pinyin_to_hanzi = hanzi_to_pinyin.inverse.to_a
+
 	# migemo dictionary format
 	# 		Romaji<Tab>Word[<Tab>alternatives]
 	migemo_dict = pinyin_to_hanzi.map &X.join("\t")
 	open('migemo-dict-zh', 'w') { |f| f.puts migemo_dict }
+
+	# migemo_vim is used for easymotion.
+	# Format:
+	# function! EasyMotion#migemo#encoding#load_dict()
+	# 		return {
+	# 			\ 'a' : '\%([words])',
+	# 			...
+	#    	\ }
+	# endfunction
+	result = {}
+	('a'..'z').each { |c| result[c] = [] }
+	pinyin_to_hanzi.each do |l|
+		('a'..'z').each do |c|
+			if l[0][0].downcase == c
+				result[c] << l[1]
+			else
+				next
+			end
+		end
+	end
+	result.each { |k, v| result[k] = v.join }
+	open('zh_utf8.vim', 'w') do |f|
+		f.puts "function! EasyMotion#migemo#zh_utf8#load_dict()"
+		f.puts "return {"
+		result.each do |k, v|
+			f.puts "			\\ '#{k}' : '\\%([#{v}])',"
+		end
+		f.puts "   	\\ }"
+		f.puts "endfunction"
+	end
 end
 
 task :download do
@@ -34,7 +65,10 @@ task :update do
 	if local_commit == remote_commit
 		puts 'hz2py.json is already the newest.'
 	else
-		['downlad', 'update'].each { |t| Rake::Task[t].invoke }
+		# update commit
+		open('hz2py.json.commit', 'w') { |f| f.puts remote_commit }
+		# download
+		['downlad', 'convert'].each { |t| Rake::Task[t].invoke }
 	end
 end
 
