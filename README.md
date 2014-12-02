@@ -1,6 +1,6 @@
 This repository contains:
 
-- a dictionary to use cmigemo whith Chinese
+- a dictionary to use cmigemo with Chinese
 - a Rakefile.rb to build the dictionary
 
 ## Usage

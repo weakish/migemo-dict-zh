@@ -9,7 +9,7 @@ require 'nokogiri'
 
 task :convert do
 	hanzi_to_pinyin = JSON.parse open('hz2py.json').read
-	pinyin_to_hanzi = hanzi_to_pinyin.inverse.to_a
+	pinyin_to_hanzi = hanzi_to_pinyin.inverse.sort
 
 	# migemo dictionary format
 	# 		Romaji<Tab>Word[<Tab>alternatives]
