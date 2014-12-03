@@ -27,7 +27,12 @@ end
 funcsave zhmigemo
 ```
 
-If you want to build the dictionary, you can just clone this repository, then run `rake` inside.
+If you want to build the dictionary, you can just clone this repository, then run the following commands inside:
+
+```sh
+bundle install
+rake
+```
 
 ## Credit
 

@@ -1,4 +1,5 @@
-# A sample Gemfile
 source "https://rubygems.org"
 
-# gem "rails"
+gem 'ampex'
+gem 'facets'
+gem 'nokogiri'
