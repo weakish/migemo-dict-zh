@@ -57,7 +57,7 @@ task :update do
   # get remote commit info
   hanzi_to_pinyin_histroy_url = 'https://github.com/wxianfeng/hanzi_to_pinyin_node/commits/master/lib/hz2py.json'
   html = Nokogiri::HTML open(hanzi_to_pinyin_histroy_url)
-  remote_commit = html.css('div.commit-links-group.button-group a.sha.button-outline').first['href']
+  remote_commit = html.at('div.commit-links-group.button-group a.sha.button-outline')['href']
 
   # compared with local info
   local_commit = open('hz2py.json.commit').read
