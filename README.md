@@ -5,7 +5,18 @@ This repository contains:
 
 ## Usage
 
-Put `migemo-dict-zh` to the place you want, then use it when calling cmigemo.
+The [develop][] branch of cmigemo has this directory built-in.
+You can use it, e.g. via
+
+```sh
+cmigemo /usr/local/share/migemo/utf-8/migemo-dict-zh
+```
+
+[develop]: https://github.com/koron/cmigemo/tree/develop
+
+For older versions of cmigemo,
+put `migemo-dict-zh` to the place you want,
+then use it with `cmigemo -d`:
 
 ```sh
 cmigemo -d /path/to/migemo-dict-zh --other-cmigemo-options
